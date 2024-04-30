@@ -90,38 +90,36 @@ slow_print0_5(" Les rouges : " + str(Rouge[:]))
 slow_print0_5("Vous êtes le heureux propriétaire de 100 €")
 
 Bets = dict()
-
-
 #Loop de jeu 
 while somme_joueur > 0:
     nmb_betz = nmb_bet(int(input("Combien de paris souhaitez vous faire sur ce jeu ci ? ")))
     #Loop nombre paris 
     for i in range(nmb_betz) :
         x = bet_choice(input)
-        Bets["pari"[i]]= x 
-        if Bets["pari"[i]] == 1 :
+        Bets[i]["pari"]= x 
+        if Bets[i]["pari"] == 1 :
             y = bet_1_2 (input)
             if y == 1 : 
-                Bets["pair ou impair"[i]] = 1
+                Bets[i]["pair impair"] = 1
             elif y == 2 :
-                Bets["pair ou impair"[i]] = 2
+                Bets[i]["pair impair"] = 2
 
-        elif Bets["pari"[i]] == 2:
+        elif Bets[i]["pari"] == 2:
             y = bet_R_B(input)
             if y == 1: 
-                Bets["Rouge ou Noir"[i]] = 1
+                Bets[i]["Rouge ou Noir"] = 1
             elif y == 2 :
-                Bets["Rouge ou Noir"[i]]= 2
+                Bets[i]["Rouge ou Noir"]= 2
         else :
              y= bet_nmb(input)
 
-             Bets["Nombre"[i]]= y 
+             Bets[i]["Nombre"]= y 
         mise = int(input("Quelle mise souhaitez vous réaliser sur ce paris ? "))
         if mise > somme_joueur or mise <= 0 : 
             print("Vous ne pouvez pas parier plus que ce que vous posséder ou 0")
         else :
             somme_joueur = somme_joueur - mise
-            Bets["mise"[i]] = mise 
+            Bets[i]["mise"] = mise 
         
     #Roulement de la roulette : 
     roul_res = random.randint (0,36)
@@ -133,38 +131,38 @@ while somme_joueur > 0:
     #For i in range (nmb_betz) pour les résultats 
     for i in range(nmb_betz):
         #Verification paris pairs et impairs 
-        if Bets["pari"[i]] == 1:
-            if Bets["pair ou impair"[i]]== 1 :
+        if Bets[i]["pari"] == 1:
+            if Bets[i]["pair impair"]== 1 :
                 if roul_res % 2 == 1 :
                     print("C'est gagné !")
-                    somme_joueur = somme_joueur+Bets["mise"[i]]*2
+                    somme_joueur = somme_joueur+Bets[i]["mise"]*2
                 elif roul_res%2 == 0 :
                     print("c'est perdu")
-            elif Bets["pair ou impair"[i]] == 2 : 
+            elif Bets[i]["pair impair"] == 2 : 
                 if roul_res % 2 == 0 :
                     print("C'est gagné !")
-                    somme_joueur = somme_joueur+Bets["mise"[i]]*2
+                    somme_joueur = somme_joueur+Bets[i]["mise"]*2
                 elif roul_res%2 == 1 : 
                     print("c'est perdu")
         #Paris Rouge ou noir 
-        if Bets["pari"[i]]==2:
+        if Bets[i]["pari"]==2:
             #Noir gagnant 
-            if Bets["Rouge ou Noir"[i]] in Noir and roul_res in Noir:
+            if Bets[i]["Rouge ou Noir"] in Noir and roul_res in Noir:
                 print("Noir Gagnant - C'est gagné!")
-                somme_joueur = somme_joueur+Bets["mise"[i]]*2 
+                somme_joueur = somme_joueur+Bets[i]["mise"]*2 
                 
             #Rouge gagnant 
-            if Bets["Rouge ou Noir"[i]] in Rouge and roul_res in Rouge:
+            if Bets[i]["Rouge ou Noir"] in Rouge and roul_res in Rouge:
                 print("Rouge gagnant ! C'est gagné !")
-                somme_joueur = somme_joueur+Bets["mise"[i]]*2
+                somme_joueur = somme_joueur+Bets[i]["mise"]*2
             #Else perdu 
             else : 
                 print("C'est perdu - Rouge ou Noir perdant ")
         #Chiffre gagnant ? 
-        elif Bets["pari"[i]]==3:
-            if Bets["Nombre"[i]] == roul_res :
+        elif Bets[i]["pari"]==3:
+            if Bets[i]["Nombre"] == roul_res :
                 print("WAOUW- chiffre Gagnaaaant")
-                somme_joueur = somme_joueur + Bets["mise"[i]]*36
+                somme_joueur = somme_joueur + Bets[i]["mise"]*36
             else : 
                 print("Perdu ... Pari risqué !! ")
     print("Votre dépôt est de " + str(somme_joueur)+"€ .")
